@@ -56,8 +56,7 @@ samplescreen/
 
 - **Node.js** ≥ 22.11
 - **npm** ou **yarn**
-- **Android SDK** (para Android / emulador)
-- **BlueStacks** ou emulador Android (opcional, para testes no Windows)
+- **Android SDK** + **Android Studio** (emulador ou dispositivo físico)
 
 ---
 
@@ -85,21 +84,23 @@ npm start
 
 > O script `start-metro.ps1` limpa cache, libera a porta 8081 e inicia o bundler pelo caminho real do projeto.
 
-### 4️⃣ Build e instalação (Windows + BlueStacks)
+### 4️⃣ Build e instalação (Android)
 
-Em **outro terminal**:
+Abra o emulador no **Android Studio** (Device Manager) ou conecte um celular com depuração USB ativa.
+
+Em **outro terminal** (Windows — evita erro de caminho longo no build nativo):
 
 ```bash
 npm run android:win
 ```
 
-No BlueStacks: **Configurações → Avançado → Depuração Android (ADB) = ON**
-
-Para conectar manualmente ao BlueStacks:
+Em macOS/Linux, ou se o build padrão funcionar:
 
 ```bash
-npm run bluestacks
+npm run android
 ```
+
+> Carregue o ambiente Android no PowerShell, se necessário: `. .\scripts\android-env.ps1`
 
 ### 🍎 iOS (macOS)
 
@@ -117,9 +118,8 @@ npm run ios
 |---------|-----------|
 | `npm start` | Inicia Metro (com reset de cache) |
 | `npm run start:metro` | Inicia Metro sem reset |
-| `npm run android:win` | Build Android no Windows + instala no BlueStacks |
-| `npm run android` | `react-native run-android` (padrão CLI) |
-| `npm run bluestacks` | Conecta ADB ao BlueStacks |
+| `npm run android:win` | Build Android no Windows (caminho curto, recomendado) |
+| `npm run android` | Build via CLI padrão (`react-native run-android`) |
 | `npm run ios` | Roda no simulador iOS |
 | `npm test` | Testes Jest |
 | `npm run lint` | ESLint |
@@ -139,10 +139,13 @@ npm run ios
 
 | Problema | Solução |
 |----------|---------|
-| 🔴 Metro SHA-1 / erro 500 | Rode `npm start` (nunca pelo drive `S:`). Mate processos na porta 8081 |
+| 🔴 Metro SHA-1 / erro 500 | Rode `npm start` e mate processos na porta 8081 |
 | ⚛️ Invalid hook call (React duplicado) | `npm install` roda `dedupe-react.js` no postinstall |
-| 💾 Dados não persistem | Rebuild do APK: `npm run android:win` |
-| 📱 BlueStacks não conecta | `npm run bluestacks` · confira ADB habilitado |
+| 💾 Dados não persistem | Rebuild do app: `npm run android` |
+| 📱 Dispositivo não detectado | Abra o emulador no Android Studio ou confira `adb devices` |
+| 📏 Filename longer than 260 characters | Use `npm run android:win` (mapeia drive `S:` só durante o build) |
+| 🏗️ ABI x86_64 / arm64 mismatch | Emulador usa `x86_64`; celular usa `arm64-v8a` — `android:win` detecta automaticamente |
+| 🔌 Porta 8081 em uso | Feche o Metro antigo ou rode `npm start` (libera a porta automaticamente) |
 | 🐌 App lagado no emulador | Normal no Android — blur e animações pesam mais que no device real |
 
 ---

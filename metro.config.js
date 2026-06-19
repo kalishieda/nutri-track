@@ -13,7 +13,6 @@ const config = {
   projectRoot,
   watchFolders: [projectRoot],
   resolver: {
-    // Evita resolver node_modules pelo drive virtual S: (subst)
     nodeModulesPaths: [path.resolve(projectRoot, 'node_modules')],
     // Moti/framer-motion trazem React duplicado — força uma única instância
     extraNodeModules: {

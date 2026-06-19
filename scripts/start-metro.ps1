@@ -1,4 +1,4 @@
-# Inicia Metro sempre pelo caminho real (C:\...) - nunca pelo subst S:.
+# Inicia Metro na raiz do projeto.
 # Uso: npm start
 
 param(
@@ -47,5 +47,4 @@ if ($ResetCache) {
 }
 
 Write-Host "Metro em: $ProjectRoot"
-Write-Host "Certifique-se de que S: NAO esta mapeado (subst)."
 npx react-native @metroArgs @args

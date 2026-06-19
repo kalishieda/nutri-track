@@ -1,10 +1,7 @@
-# Limpa caches do Metro/Haste que causam erro SHA-1 apos uso do subst S:
+# Limpa caches do Metro/Haste.
 param(
     [string]$ProjectRoot = (Resolve-Path "$PSScriptRoot\..").Path
 )
-
-Write-Host "Removendo drive virtual S: (se existir)..."
-cmd /c "subst S: /d" 2>$null | Out-Null
 
 $paths = @(
     (Join-Path $ProjectRoot "node_modules\.cache"),
