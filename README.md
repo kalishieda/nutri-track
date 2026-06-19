@@ -1,97 +1,170 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🥗 NutriTrack
 
-# Getting Started
+> App de rastreamento nutricional com visual **glassmorphism** e animações fluidas — feito com React Native.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Acompanhe calorias, macros e refeições do dia a dia com uma interface moderna, leve e bonita. ✨
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## ✨ Funcionalidades
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+| Aba | O que faz |
+|-----|-----------|
+| 📅 **Today** | Dashboard com anel de calorias, macros e lista de refeições do dia |
+| 📊 **History** | Histórico semanal e progresso diário |
+| 🍎 **Foods** | Catálogo de alimentos com busca, filtros e log rápido |
+| ⚙️ **Settings** | Perfil, metas de calorias/proteína e preferências |
 
-```sh
-# Using npm
+**Extras:**
+- ➕ Adicionar, editar e remover refeições
+- 📝 Registrar alimentos direto da aba Foods
+- 💾 Persistência local com AsyncStorage
+- 🫧 UI glass com blur, brilho e bordas luminosas
+- 🎬 Animações com Moti + Reanimated (transições, stagger, micro-interações)
+
+---
+
+## 🛠️ Stack
+
+- **React Native** 0.86 · **React** 19 · **TypeScript**
+- **Moti** + **Reanimated** — animações
+- **Gesture Handler** — gestos
+- **BlurView** — efeito glass nativo (iOS)
+- **SVG** — anel de calorias
+- **AsyncStorage** — dados offline
+
+---
+
+## 📁 Estrutura
+
+```
+samplescreen/
+├── App.tsx                 # Navegação por abas + provider
+├── src/
+│   ├── components/         # UI (LiquidGlass, MealCard, TabBar…)
+│   ├── screens/            # Today, History, Foods, Settings
+│   ├── context/            # Estado global (NutriContext)
+│   ├── storage/            # Persistência AsyncStorage
+│   ├── theme/              # Cores, tipografia, tokens glass
+│   └── utils/              # Cálculos, motion, performance
+└── scripts/                # Automação Windows / Android
+```
+
+---
+
+## 📋 Pré-requisitos
+
+- **Node.js** ≥ 22.11
+- **npm** ou **yarn**
+- **Android SDK** (para Android / emulador)
+- **BlueStacks** ou emulador Android (opcional, para testes no Windows)
+
+---
+
+## 🚀 Como rodar
+
+### 1️⃣ Instalar dependências
+
+```bash
+npm install
+```
+
+### 2️⃣ Configurar Android SDK (Windows, primeira vez)
+
+```powershell
+.\scripts\setup-android-sdk.ps1
+```
+
+### 3️⃣ Iniciar o Metro
+
+Abra um terminal na raiz do projeto:
+
+```bash
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+> O script `start-metro.ps1` limpa cache, libera a porta 8081 e inicia o bundler pelo caminho real do projeto.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 4️⃣ Build e instalação (Windows + BlueStacks)
 
-### Android
+Em **outro terminal**:
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npm run android:win
 ```
 
-### iOS
+No BlueStacks: **Configurações → Avançado → Depuração Android (ADB) = ON**
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+Para conectar manualmente ao BlueStacks:
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+```bash
+npm run bluestacks
+```
 
-```sh
+### 🍎 iOS (macOS)
+
+```bash
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+---
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📜 Scripts disponíveis
 
-## Step 3: Modify your app
+| Comando | Descrição |
+|---------|-----------|
+| `npm start` | Inicia Metro (com reset de cache) |
+| `npm run start:metro` | Inicia Metro sem reset |
+| `npm run android:win` | Build Android no Windows + instala no BlueStacks |
+| `npm run android` | `react-native run-android` (padrão CLI) |
+| `npm run bluestacks` | Conecta ADB ao BlueStacks |
+| `npm run ios` | Roda no simulador iOS |
+| `npm test` | Testes Jest |
+| `npm run lint` | ESLint |
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## 🔄 Reload & Dev Menu
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+| Ação | Atalho |
+|------|--------|
+| 🔄 Reload rápido | `R` `R` no emulador |
+| 🛠️ Dev Menu | `Ctrl` + `M` (Windows) · `Cmd` + `M` (macOS) |
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+---
 
-## Congratulations! :tada:
+## 🐛 Troubleshooting
 
-You've successfully run and modified your React Native App. :partying_face:
+| Problema | Solução |
+|----------|---------|
+| 🔴 Metro SHA-1 / erro 500 | Rode `npm start` (nunca pelo drive `S:`). Mate processos na porta 8081 |
+| ⚛️ Invalid hook call (React duplicado) | `npm install` roda `dedupe-react.js` no postinstall |
+| 💾 Dados não persistem | Rebuild do APK: `npm run android:win` |
+| 📱 BlueStacks não conecta | `npm run bluestacks` · confira ADB habilitado |
+| 🐌 App lagado no emulador | Normal no Android — blur e animações pesam mais que no device real |
 
-### Now what?
+---
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## 🎨 Design
 
-# Troubleshooting
+Interface inspirada em **liquid glass** / glassmorphism:
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- Superfícies translúcidas com blur
+- Blobs animados no fundo
+- Cards com brilho superior
+- Transições suaves entre abas
+- Feedback tátil nos botões e cards
 
-# Learn More
+---
 
-To learn more about React Native, take a look at the following resources:
+## 📄 Licença
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Projeto privado · uso interno / estudo.
+
+---
+
+<p align="center">
+  Feito com 💚 e React Native
+</p>
