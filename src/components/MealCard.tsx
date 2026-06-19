@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
-import {MotiText, MotiView} from 'moti';
+import {MotiText, MotiView} from '../utils/moti';
 import {LiquidGlass} from './LiquidGlass';
 import {typography} from '../theme/typography';
 import {motion} from '../utils/motion';

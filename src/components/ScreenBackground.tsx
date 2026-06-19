@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {MotiView} from 'moti';
+import {MotiView} from '../utils/moti';
 import {colors} from '../theme/colors';
 import {fadeIn, motion} from '../utils/motion';
 import {useMotion} from '../utils/performance';

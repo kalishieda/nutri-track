@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {MotiView} from 'moti';
+import {MotiView} from '../utils/moti';
 import {LiquidGlass} from '../components/LiquidGlass';
 import {useNutri} from '../context/NutriContext';
 import {FoodItem, foodCategories, foods} from '../data/mockData';

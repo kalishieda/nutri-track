@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {MotiText, MotiView} from 'moti';
+import {MotiText, MotiView} from '../utils/moti';
 import Svg, {Circle} from 'react-native-svg';
 import {colors} from '../theme/colors';
 import {typography} from '../theme/typography';

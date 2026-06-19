@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-import {MotiView} from 'moti';
+import {MotiView} from '../utils/moti';
 import {colors} from '../theme/colors';
 import {glass, glassCard, glassCardStrong} from '../theme/glass';
 import {fadeUp, motion} from '../utils/motion';

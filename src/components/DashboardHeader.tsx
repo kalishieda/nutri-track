@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {MotiView} from 'moti';
+import {MotiView} from '../utils/moti';
 import {CalorieRing} from './CalorieRing';
 import {Header} from './Header';
 import {LiquidGlass} from './LiquidGlass';
