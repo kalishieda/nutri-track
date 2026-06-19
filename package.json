@@ -4,16 +4,28 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:win": "powershell -ExecutionPolicy Bypass -File ./scripts/run-android.ps1",
+    "bluestacks": "powershell -ExecutionPolicy Bypass -File ./scripts/connect-bluestacks.ps1",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
+    "start": "powershell -ExecutionPolicy Bypass -File ./scripts/start-metro.ps1 -ResetCache",
+    "start:metro": "powershell -ExecutionPolicy Bypass -File ./scripts/start-metro.ps1",
+    "test": "jest",
+    "postinstall": "node scripts/dedupe-react.js"
   },
   "dependencies": {
-    "react": "19.2.3",
-    "react-native": "0.86.0",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-native-community/blur": "^4.4.1",
     "@react-native/new-app-screen": "0.86.0",
-    "react-native-safe-area-context": "^5.5.2"
+    "moti": "^0.30.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-gesture-handler": "^3.0.2",
+    "react-native-reanimated": "^4.4.1",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-svg": "^15.15.5",
+    "react-native-worklets": "^0.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -37,5 +49,9 @@
   },
   "engines": {
     "node": ">= 22.11.0"
+  },
+  "overrides": {
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   }
 }
