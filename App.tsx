@@ -7,7 +7,6 @@ import React, {useCallback, useState} from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import {AnimatedScreen} from './src/components/AnimatedScreen';
 import {DashboardHeader} from './src/components/DashboardHeader';
 import {LogFoodButton} from './src/components/LogFoodButton';
 import {ScreenBackground} from './src/components/ScreenBackground';
@@ -18,9 +17,26 @@ import {HistoryScreen} from './src/screens/HistoryScreen';
 import {SettingsScreen} from './src/screens/SettingsScreen';
 import {TodayScreen} from './src/screens/TodayScreen';
 
-function TodayDashboard() {
+const TodayDashboard = React.memo(function TodayDashboard() {
   const {todayEntries, profile} = useNutri();
   return <DashboardHeader todayEntries={todayEntries} profile={profile} />;
+});
+
+function TabPanel({
+  visible,
+  children,
+}: {
+  visible: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <View
+      style={[styles.tabPanel, !visible && styles.tabPanelHidden]}
+      pointerEvents={visible ? 'auto' : 'none'}
+      collapsable={false}>
+      {children}
+    </View>
+  );
 }
 
 function AppContent() {
@@ -44,6 +60,8 @@ function AppContent() {
     setActiveTab('foods');
   }, []);
 
+  const showTodayChrome = activeTab === 'today';
+
   return (
     <ScreenBackground>
       <StatusBar
@@ -52,25 +70,37 @@ function AppContent() {
         translucent
       />
       <SafeAreaView style={styles.container} edges={['top']}>
-        {activeTab === 'today' && <TodayDashboard />}
+        {visitedTabs.has('today') && (
+          <View
+            style={!showTodayChrome && styles.hidden}
+            pointerEvents={showTodayChrome ? 'auto' : 'none'}>
+            <TodayDashboard />
+          </View>
+        )}
         <TabBar activeTab={activeTab} onTabPress={handleTabPress} />
         <View style={styles.content}>
-          <AnimatedScreen screenKey={activeTab}>
-            {activeTab === 'today' && visitedTabs.has('today') && (
+          {visitedTabs.has('today') && (
+            <TabPanel visible={activeTab === 'today'}>
               <TodayScreen />
-            )}
-            {activeTab === 'history' && visitedTabs.has('history') && (
+            </TabPanel>
+          )}
+          {visitedTabs.has('history') && (
+            <TabPanel visible={activeTab === 'history'}>
               <HistoryScreen />
-            )}
-            {activeTab === 'foods' && visitedTabs.has('foods') && (
+            </TabPanel>
+          )}
+          {visitedTabs.has('foods') && (
+            <TabPanel visible={activeTab === 'foods'}>
               <FoodsScreen highlightLog={logFoodMode} />
-            )}
-            {activeTab === 'settings' && visitedTabs.has('settings') && (
+            </TabPanel>
+          )}
+          {visitedTabs.has('settings') && (
+            <TabPanel visible={activeTab === 'settings'}>
               <SettingsScreen />
-            )}
-          </AnimatedScreen>
+            </TabPanel>
+          )}
         </View>
-        {activeTab === 'today' && <LogFoodButton onPress={handleLogFood} />}
+        {showTodayChrome && <LogFoodButton onPress={handleLogFood} />}
       </SafeAreaView>
     </ScreenBackground>
   );
@@ -97,6 +127,21 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    position: 'relative',
+  },
+  tabPanel: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  tabPanelHidden: {
+    opacity: 0,
+    zIndex: -1,
+  },
+  hidden: {
+    display: 'none',
   },
 });
 

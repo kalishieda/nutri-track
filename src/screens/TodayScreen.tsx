@@ -32,7 +32,8 @@ export function TodayScreen() {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews>
         <Text style={typography.sectionTitle}>MEALS</Text>
         {todayEntries.length === 0 ? (
           <Text style={styles.empty}>

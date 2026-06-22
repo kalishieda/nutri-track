@@ -1,11 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {MotiText, MotiView} from '../utils/moti';
 import Svg, {Circle} from 'react-native-svg';
 import {colors} from '../theme/colors';
 import {typography} from '../theme/typography';
-import {motion} from '../utils/motion';
-import {useMotion} from '../utils/performance';
 
 type CalorieRingProps = {
   consumedCalories: number;
@@ -19,7 +16,7 @@ const STROKE = 10;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-export function CalorieRing({
+export const CalorieRing = React.memo(function CalorieRing({
   consumedCalories,
   goalCalories,
   caloriesLeft,
@@ -28,39 +25,11 @@ export function CalorieRing({
   const ringFill = goalCalories > 0 ? Math.min(100, percentComplete) : 0;
   const strokeDashoffset = CIRCUMFERENCE * (1 - ringFill / 100);
 
-  const goalText = (
-    <Text style={styles.goalLabel}>
-      {consumedCalories} / {goalCalories} kcal
-    </Text>
-  );
-
-  const centerValue = useMotion ? (
-    <MotiText
-      key={`left-${caloriesLeft}`}
-      from={{opacity: 0.5, scale: 0.9}}
-      animate={{opacity: 1, scale: 1}}
-      transition={motion.enter}
-      style={typography.ringValue}>
-      {caloriesLeft}
-    </MotiText>
-  ) : (
-    <Text style={typography.ringValue}>{caloriesLeft}</Text>
-  );
-
   return (
     <View style={styles.container}>
-      {useMotion ? (
-        <MotiText
-          key={`goal-${consumedCalories}-${goalCalories}`}
-          from={{opacity: 0.6}}
-          animate={{opacity: 1}}
-          transition={motion.enter}
-          style={styles.goalLabel}>
-          {consumedCalories} / {goalCalories} kcal
-        </MotiText>
-      ) : (
-        goalText
-      )}
+      <Text style={styles.goalLabel}>
+        {consumedCalories} / {goalCalories} kcal
+      </Text>
       <Text style={styles.percentLabel}>{percentComplete}% of daily goal</Text>
       <View style={styles.ringWrapper}>
         <Svg width={SIZE} height={SIZE}>
@@ -73,7 +42,6 @@ export function CalorieRing({
             fill="none"
           />
           <Circle
-            key={`progress-${ringFill}`}
             cx={SIZE / 2}
             cy={SIZE / 2}
             r={RADIUS}
@@ -88,13 +56,13 @@ export function CalorieRing({
           />
         </Svg>
         <View style={styles.centerContent}>
-          {centerValue}
+          <Text style={typography.ringValue}>{caloriesLeft}</Text>
           <Text style={typography.ringUnit}>kcal left</Text>
         </View>
       </View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {

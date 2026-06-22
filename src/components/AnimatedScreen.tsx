@@ -1,8 +1,8 @@
 import React, {ReactNode} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {AnimatePresence, MotiView} from '../utils/moti';
 import {fadeUp, motion} from '../utils/motion';
-import {useMotion} from '../utils/performance';
+import {useMotion, useScreenTransitions} from '../utils/performance';
 
 type AnimatedScreenProps = {
   screenKey: string;
@@ -10,8 +10,8 @@ type AnimatedScreenProps = {
 };
 
 export function AnimatedScreen({screenKey, children}: AnimatedScreenProps) {
-  if (!useMotion) {
-    return <>{children}</>;
+  if (!useScreenTransitions || !useMotion) {
+    return <View style={styles.screen}>{children}</View>;
   }
 
   return (

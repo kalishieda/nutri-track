@@ -1,10 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {MotiView} from '../utils/moti';
 import {colors} from '../theme/colors';
 import {typography} from '../theme/typography';
-import {motion} from '../utils/motion';
-import {useMotion} from '../utils/performance';
 
 type MacroItem = {
   label: string;
@@ -16,7 +13,7 @@ type MacroBreakdownProps = {
   macros: MacroItem[];
 };
 
-function MacroRow({label, current, goal, index}: MacroItem & {index: number}) {
+function MacroRow({label, current, goal}: MacroItem) {
   const progress = goal > 0 ? Math.min(current / goal, 1) : 0;
 
   return (
@@ -25,31 +22,23 @@ function MacroRow({label, current, goal, index}: MacroItem & {index: number}) {
         {label}: {current}g / {goal}g
       </Text>
       <View style={styles.track}>
-        {useMotion ? (
-          <MotiView
-            key={`${label}-${current}`}
-            from={{width: '0%'}}
-            animate={{width: `${progress * 100}%`}}
-            transition={{...motion.enter, delay: 120 + index * 80}}
-            style={styles.fill}
-          />
-        ) : (
-          <View style={[styles.fill, {width: `${progress * 100}%`}]} />
-        )}
+        <View style={[styles.fill, {width: `${progress * 100}%`}]} />
       </View>
     </View>
   );
 }
 
-export function MacroBreakdown({macros}: MacroBreakdownProps) {
+export const MacroBreakdown = React.memo(function MacroBreakdown({
+  macros,
+}: MacroBreakdownProps) {
   return (
     <View style={styles.container}>
-      {macros.map((macro, index) => (
-        <MacroRow key={macro.label} {...macro} index={index} />
+      {macros.map(macro => (
+        <MacroRow key={macro.label} {...macro} />
       ))}
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {

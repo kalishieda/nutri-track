@@ -1,11 +1,8 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {MotiView} from '../utils/moti';
 import {LiquidGlass} from './LiquidGlass';
 import {colors} from '../theme/colors';
 import {typography} from '../theme/typography';
-import {motion} from '../utils/motion';
-import {useMotion} from '../utils/performance';
 
 export type TabId = 'today' | 'history' | 'foods' | 'settings';
 
@@ -21,7 +18,10 @@ const TABS: {id: TabId; label: string}[] = [
   {id: 'settings', label: 'SETTINGS'},
 ];
 
-export function TabBar({activeTab, onTabPress}: TabBarProps) {
+export const TabBar = React.memo(function TabBar({
+  activeTab,
+  onTabPress,
+}: TabBarProps) {
   return (
     <LiquidGlass animate={false} style={styles.glass}>
       <View style={styles.container}>
@@ -32,46 +32,18 @@ export function TabBar({activeTab, onTabPress}: TabBarProps) {
               key={tab.id}
               style={styles.tab}
               onPress={() => onTabPress(tab.id)}>
-              {useMotion ? (
-                <MotiView
-                  animate={{
-                    scale: isActive ? 1 : 0.96,
-                    opacity: isActive ? 1 : 0.72,
-                  }}
-                  transition={motion.tab}>
-                  <Text
-                    style={
-                      isActive ? typography.tabActive : typography.tabInactive
-                    }>
-                    {tab.label}
-                  </Text>
-                </MotiView>
-              ) : (
-                <Text
-                  style={
-                    isActive ? typography.tabActive : typography.tabInactive
-                  }>
-                  {tab.label}
-                </Text>
-              )}
-              {isActive &&
-                (useMotion ? (
-                  <MotiView
-                    from={{scaleX: 0, opacity: 0}}
-                    animate={{scaleX: 1, opacity: 1}}
-                    transition={motion.tab}
-                    style={styles.indicator}
-                  />
-                ) : (
-                  <View style={styles.indicator} />
-                ))}
+              <Text
+                style={isActive ? typography.tabActive : typography.tabInactive}>
+                {tab.label}
+              </Text>
+              {isActive && <View style={styles.indicator} />}
             </Pressable>
           );
         })}
       </View>
     </LiquidGlass>
   );
-}
+});
 
 const styles = StyleSheet.create({
   glass: {

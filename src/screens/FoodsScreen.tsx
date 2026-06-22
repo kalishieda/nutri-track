@@ -145,7 +145,8 @@ export function FoodsScreen({highlightLog = false}: FoodsScreenProps) {
 
       <ScrollView
         contentContainerStyle={styles.list}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        removeClippedSubviews>
         {filtered.length === 0 ? (
           <LiquidGlass animate={false}>
             <View style={styles.empty}>

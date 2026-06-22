@@ -1,42 +1,18 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {MotiView} from '../utils/moti';
 import {colors} from '../theme/colors';
-import {fadeIn, motion} from '../utils/motion';
-import {useMotion} from '../utils/performance';
 
 type ScreenBackgroundProps = {
   children: ReactNode;
 };
 
-function BackgroundBlob({
-  style,
-  delay,
-}: {
-  style: object;
-  delay: number;
-}) {
-  if (!useMotion) {
-    return <View style={[styles.blob, style]} />;
-  }
-
-  return (
-    <MotiView
-      from={{...fadeIn.from, scale: 0.92}}
-      animate={{...fadeIn.animate, scale: 1}}
-      transition={{...motion.enter, delay}}
-      style={[styles.blob, style]}
-    />
-  );
-}
-
 export function ScreenBackground({children}: ScreenBackgroundProps) {
   return (
     <View style={styles.container}>
       <View style={styles.baseGradient} />
-      <BackgroundBlob style={styles.blobTop} delay={0} />
-      <BackgroundBlob style={styles.blobBottom} delay={120} />
-      <BackgroundBlob style={styles.blobCenter} delay={220} />
+      <View style={[styles.blob, styles.blobTop]} />
+      <View style={[styles.blob, styles.blobBottom]} />
+      <View style={[styles.blob, styles.blobCenter]} />
       <View style={styles.content}>{children}</View>
     </View>
   );
